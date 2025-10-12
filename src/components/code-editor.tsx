@@ -36,6 +36,11 @@ export default function CodeEditor({
         onChange={(value) => handleCodeChange(value || '')}
         defaultValue={currentFile.file.contents as string} // Ideally, worry about the encoding in production, for our example, this is fine.
         defaultLanguage={language}
+        options={{
+          smoothScrolling: true,
+          cursorBlinking: 'smooth',
+          rulers: [],
+        }}
       />
     </div>
   );

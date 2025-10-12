@@ -37,13 +37,13 @@ export default function App() {
             <Panel>
               <CodeEditor webContainer={webContainer} />
             </Panel>
-            <PanelResizeHandle className="h-2 bg-blue-300" />
+            <PanelResizeHandle className="h-1 bg-gray-700 transition-colors hover:bg-blue-200" />
             <Panel>
               <Terminal webContainer={webContainer} />
             </Panel>
           </PanelGroup>
         </Panel>
-        <PanelResizeHandle className="w-2 bg-blue-300" />
+        <PanelResizeHandle className="w-1 bg-gray-700 transition-colors hover:bg-blue-200" />
         <Panel>
           <Preview webContainer={webContainer} />
         </Panel>
