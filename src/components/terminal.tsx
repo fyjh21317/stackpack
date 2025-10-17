@@ -25,6 +25,7 @@ export default function Terminal({
   React.useEffect(() => {
     if (!terminalRef.current) return;
 
+    // 1) 建立 xterm（前端 UI）
     const terminal = new XTerminal({ convertEol: true });
     const fitAddon = new FitAddon();
     fitAddonRef.current = fitAddon;
@@ -44,6 +45,7 @@ export default function Terminal({
   React.useEffect(() => {
     if (!webContainer || !terminal) return;
 
+    // 2) 在 WebContainer 內 spawn 一個互動式 shell
     const startShell = async () => {
       const shellProcess = await webContainer.spawn('jsh', {
         terminal: {
@@ -51,6 +53,8 @@ export default function Terminal({
           rows: terminal.rows,
         },
       });
+      // 3) 將「shell 輸出」→ 寫到 xterm
+      //    shell.output 是 ReadableStream<string>（或 Uint8Array）
       shellProcess.output.pipeTo(
         new WritableStream({
           write(data) {
@@ -59,6 +63,7 @@ export default function Terminal({
         }),
       );
 
+      // 4) 將「xterm 的輸入」→ 寫回 shell（雙向互動）
       const input = shellProcess.input.getWriter();
       terminal.onData((data) => {
         input.write(data);
